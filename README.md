@@ -1,0 +1,2 @@
+# adapters
+Stone.js Adaptors
