@@ -1,2 +1,2 @@
-# adapters
-Stone.js Adaptors
+# Adapters
+Stone.js Adapters
