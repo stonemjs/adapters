@@ -13,7 +13,7 @@ export class NodeHttpAdapter extends Adapter {
     super(app, configurations)
 
     this.#options = this.#getOptions()
-    this.#mapper  = new NodeHTTPMapper(this.getContext().container)
+    this.#mapper = new NodeHTTPMapper(this.getContext().container)
   }
 
   async run () {
@@ -34,12 +34,12 @@ export class NodeHttpAdapter extends Adapter {
   }
 
   async #requestListener (req, res) {
-    const context  = this.getContext()
-    const request  = await this.#createRequest(context, req)
+    const context = this.getContext()
+    const request = await this.#createRequest(context, req)
     const response = await context.run()
 
     res = await this.#mapper.response({ context, req, res, request, response })
-    
+
     res.send()
 
     onFinished(res, async () => await context.stop())
@@ -66,7 +66,7 @@ export class NodeHttpAdapter extends Adapter {
       serverOptions: {
         key: this.config.get('http.server.key', undefined),
         cert: this.config.get('http.server.cert', undefined),
-        requestTimeout: this.config.get('http.server.requestTimeout', 300000),
+        requestTimeout: this.config.get('http.server.requestTimeout', 300000)
       }
     }
   }

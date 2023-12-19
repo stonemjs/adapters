@@ -1,3 +1,5 @@
+import { CookieCollection } from '@stone-js/http'
+
 export class CookiePipe {
   #config
 
@@ -7,7 +9,7 @@ export class CookiePipe {
 
   async handler (request, req, next) {
     const options = this.#config.get('http.cookie.options')
-    const secret  = this.#config.get('http.cookie.secret', this.#config.get('http.secret'))
+    const secret = this.#config.get('http.cookie.secret', this.#config.get('http.secret'))
 
     request.cookies = CookieCollection.instance(options, secret).parse(req.headers.cookie)
 

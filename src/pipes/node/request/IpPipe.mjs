@@ -10,11 +10,11 @@ export class IpPipe {
 
   async handler (request, req, next) {
     const isTrusted = isFromTrustedProxy(this.#config.get('http'))
-    const addrs     = proxyAddr.all(req, isTrusted)
+    const addrs = proxyAddr.all(req, isTrusted)
 
     request.ips = addrs.reverse().pop()
-    request.ip  = proxyAddr(req, isTrusted)
-    
+    request.ip = proxyAddr(req, isTrusted)
+
     return next(request, req)
   }
 }

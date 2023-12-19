@@ -19,13 +19,13 @@ export class NodeHTTPMapper {
     BodyPipe,
     FilesPipe,
     CommonPipe,
-    CookiePipe,
+    CookiePipe
   ]
 
   #responsePipes = [
     HeaderStatusPipe,
     SendPipe,
-    SendFilePipe,
+    SendFilePipe
   ]
 
   constructor (container) {

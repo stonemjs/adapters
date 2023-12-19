@@ -1,5 +1,4 @@
 import { URL } from 'node:url'
-import proxyAddr from 'proxy-addr'
 import { isFromTrustedProxy } from '../../../utils.mjs'
 import { SuspiciousOperationException } from '@stone-js/http'
 
@@ -15,19 +14,19 @@ export class HostPipe {
 
     request.url = url
     request.queryString = url.search
-    
+
     return next(request, req)
   }
 
   #getHost (req) {
     let host = null
     const url = new URL(this.#config.get('url'))
-    const allSubdomainRegex = new RegExp(`^(.+\.)?${url.hostname}$`)
-i
+    const allSubdomainRegex = new RegExp(`^(.+.)?${url.hostname}$`)
+
     if (isFromTrustedProxy(req.socket.remoteAddress)) {
-      host = (req.headers['X-Forwarded-Host'] || proto).split(',').shift().trim()
+      host = (req.headers['X-Forwarded-Host'] || '').split(',').shift().trim()
     } else if (req.headers.has('host')) {
-      host = req.headers['host']
+      host = req.headers.host
     } else {
       host = url.hostname
     }

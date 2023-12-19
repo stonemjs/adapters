@@ -2,10 +2,10 @@ import { isFromTrustedProxy } from '../../../utils.mjs'
 
 export class CommonPipe {
   async handler (request, req, next) {
-    request.method   = request.method
-    request.headers  = request.headers
+    request.method = req.method
+    request.headers = req.headers
     request.protocol = this.#getProtocol()
-    
+
     return next(request, req)
   }
 

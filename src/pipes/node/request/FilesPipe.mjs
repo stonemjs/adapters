@@ -13,9 +13,9 @@ export class FilesPipe {
     if (this.#isMultipart(req)) {
       const res = await this.#getFiles(req)
       request.files = res.files
-      request.body  = res.fields
+      request.body = res.fields
     }
-    
+
     return next(request, req)
   }
 
@@ -27,11 +27,9 @@ export class FilesPipe {
     if (!typeIs.hasBody(req) || !this.#isMultipart()) return {}
 
     const form = formidable(this.#config.get('files', {}))
-    
+
     try {
-      let files
-      let fields
-      [fields, files] = await form.parse(req)
+      const [fields, files] = await form.parse(req)
       return {
         fields,
         files: files.map(v => new UploadedFile(v.filepath, v.originalFilename, v.mimetype))

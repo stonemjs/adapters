@@ -28,11 +28,11 @@ export class BodyPipe {
     if (!typeIs.hasBody(req)) {
       return {}
     }
-    
-    const type     = this.#getType(req)
+
+    const type = this.#getType(req)
     const encoding = this.#getCharset(req)
-    const length   = req.headers['content-length']
-    const limit    = bytes.parse(this.#config.get('http.body.limit', '100kb'))
+    const length = req.headers['content-length']
+    const limit = bytes.parse(this.#config.get('http.body.limit', '100kb'))
 
     if (!typeIs(req, type)) {
       return {}

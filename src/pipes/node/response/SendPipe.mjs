@@ -1,5 +1,3 @@
-import statuses from 'statuses'
-
 export class SendPipe {
   handler (passable, next) {
     if (passable.request.isMethod('HEAD')) {
