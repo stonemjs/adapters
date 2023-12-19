@@ -55,7 +55,8 @@
     "test:lcov": "npm run test:cvg -- --coverageReporters=lcov text"
   },
   "dependencies": {
-    "@stone-js/core": "^1.0.4"
+    "@stone-js/core": "^1.0.4",
+    "@stone-js/pipeline": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",

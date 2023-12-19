@@ -1,6 +1,4 @@
-import { isFunction } from '@stone-js/core'
-import { StoneFactory } from '@stone-js/core'
-import { LogicException } from '@stone-js/core'
+import { StoneFactory, LogicException, isFunction } from '@stone-js/core'
 
 export class Adapter {
   #context
@@ -20,6 +18,10 @@ export class Adapter {
 
   static create (app, configurations = {}) {
     return new this(app, configurations)
+  }
+
+  get config () {
+    return this.#configurations
   }
 
   getContext () {
