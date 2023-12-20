@@ -25,7 +25,8 @@ export class Adapter {
   }
 
   getContext () {
-    return this.#context ?? StoneFactory.create(this.#appModule, this.#configurations)
+    this.#context ??= StoneFactory.create(this.#appModule, this.#configurations)
+    return this.#context 
   }
 
   run () {

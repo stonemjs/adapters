@@ -35,22 +35,24 @@ export class NodeHttpAdapter extends Adapter {
 
   async #requestListener (req, res) {
     const context = this.getContext()
-    const request = await this.#createRequest(context, req)
+    const request = await this.#createRequest(req)
     const response = await context.run()
 
-    res = await this.#mapper.response({ context, req, res, request, response })
+    res = await this.#mapper.response({ req, res, request, response })
 
-    res.send()
+    await res.send()
 
     onFinished(res, async () => await context.stop())
   }
 
-  async #createRequest (context, req) {
+  async #createRequest (req) {
+    const context = this.getContext()
     const request = await this.#mapper.request(req)
+
+    request.getNodeRequest = () => req
+
     context.registerInstance(Request, request, ['request'])
     context.registerInstance('originalRequest', request.clone())
-
-    Request.macro('getNodeRequest', () => req)
 
     return request
   }

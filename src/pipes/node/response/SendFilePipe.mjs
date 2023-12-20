@@ -5,9 +5,11 @@ import { BinaryFileResponse, FileException } from '@stone-js/http'
 
 export class SendFilePipe {
   #config
+  #context
 
-  constructor ({ config }) {
-    this.#config = config
+  constructor ({ context, config }) {
+    this.#config  = config
+    this.#context = context
   }
 
   handler (passable, next) {
@@ -31,7 +33,7 @@ export class SendFilePipe {
     return this
   }
 
-  #sendFile ({ context, req, res, response }) {
+  #sendFile ({ req, res, response }) {
     let streaming
     let done = false
 
@@ -41,13 +43,13 @@ export class SendFilePipe {
       if (!done) {
         done = true
         const error = new FileException('Request aborted', 'HTTP_FILE-ECONNABORTED')
-        this.#handleException({ context, res, error })
+        this.#handleException({ res, error })
       }
     }
 
     onFinished(res, (error) => {
       if (error && error.code === 'ECONNRESET') return onaborted()
-      if (error) return this.#handleException({ context, res, error: new FileException(error.message, `HTTP_FILE-${error.code}`, error) })
+      if (error) return this.#handleException({ res, error: new FileException(error.message, `HTTP_FILE-${error.code}`, error) })
       if (done) return
 
       setImmediate(() => {
@@ -64,7 +66,7 @@ export class SendFilePipe {
       .on('error', (error) => {
         if (!done) {
           done = true
-          this.#handleException({ context, res, error: new FileException(error.message, `HTTP_FILE-${error.code}`, error) })
+          this.#handleException({ res, error: new FileException(error.message, `HTTP_FILE-${error.code}`, error) })
         }
       })
       .on('headers', (res) => {
@@ -74,7 +76,7 @@ export class SendFilePipe {
         if (!done) {
           done = true
           const error = new FileException('EISDIR, read', 'HTTP_FILE-EISDIR')
-          this.#handleException({ context, res, error })
+          this.#handleException({ res, error })
         }
       })
       .on('file', () => {
@@ -93,13 +95,13 @@ export class SendFilePipe {
     return this
   }
 
-  async #handleException ({ context, res, exception }) {
-    let response = exception
+  async #handleException ({ res, error }) {
+    let response = error
 
-    if (context.has('exceptionHandler')) {
-      const handler = context.get('exceptionHandler')
-      await handler.report(exception)
-      response = handler.render(exception)
+    if (this.#context.has('exceptionHandler')) {
+      const handler = this.#context.get('exceptionHandler')
+      await handler.report(error)
+      response = handler.render(error)
     }
 
     this.#setStatus(res, response)
