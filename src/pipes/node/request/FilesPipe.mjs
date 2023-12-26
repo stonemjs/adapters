@@ -9,14 +9,14 @@ export class FilesPipe {
     this.#config = config
   }
 
-  async handler (request, req, next) {
-    if (this.#isMultipart(req)) {
-      const res = await this.#getFiles(req)
-      request.files = res.files
-      request.body = res.fields
+  async handler (passable, next) {
+    if (this.#isMultipart(passable.req)) {
+      const res = await this.#getFiles(passable.req)
+      passable.request.files = res.files
+      passable.request.body = res.fields
     }
 
-    return next(request, req)
+    return next(passable)
   }
 
   #isMultipart (req) {

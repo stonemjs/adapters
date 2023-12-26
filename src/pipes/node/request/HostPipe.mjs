@@ -9,13 +9,13 @@ export class HostPipe {
     this.#config = config
   }
 
-  async handler (request, req, next) {
-    const url = new URL(req.url, `http://${this.#getHost(req)}`)
+  async handler (passable, next) {
+    const url = new URL(passable.req.url, `http://${this.#getHost(passable.req)}`)
 
-    request.url = url
-    request.queryString = url.search
+    passable.request.url = url
+    passable.request.queryString = url.search
 
-    return next(request, req)
+    return next(passable)
   }
 
   #getHost (req) {

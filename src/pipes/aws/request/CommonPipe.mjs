@@ -7,13 +7,13 @@ export class CommonPipe {
     this.#config = config
   }
 
-  async handler (request, event, ctx, next) {
-    request.headers = event.headers
-    request.method = this.#getMethod(event)
-    request.protocol = this.#getProtocol(event)
-    request.queryString = event.queryStringParameters
+  async handler (passable, next) {
+    passable.request.headers = passable.event.headers
+    passable.request.method = this.#getMethod(passable.event)
+    passable.request.protocol = this.#getProtocol(passable.event)
+    passable.request.queryString = passable.event.queryStringParameters
 
-    return next(request, event, ctx)
+    return next(passable)
   }
 
   #getMethod (event) {

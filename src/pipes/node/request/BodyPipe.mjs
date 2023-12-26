@@ -12,12 +12,12 @@ export class BodyPipe {
     this.#config = config
   }
 
-  async handler (request, req, next) {
-    if (!this.#isMultipart(req)) {
-      request.body = await this.#getBody(req)
+  async handler (passable, next) {
+    if (!this.#isMultipart(passable.req)) {
+      passable.request.body = await this.#getBody(passable.req)
     }
 
-    return next(request, req)
+    return next(passable)
   }
 
   #isMultipart (req) {

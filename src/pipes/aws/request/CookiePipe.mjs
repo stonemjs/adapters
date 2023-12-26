@@ -7,12 +7,12 @@ export class CookiePipe {
     this.#config = config
   }
 
-  async handler (request, event, ctx, next) {
+  async handler (passable, next) {
     const options = this.#config.get('http.cookie.options')
     const secret  = this.#config.get('http.cookie.secret', this.#config.get('http.secret'))
 
-    request.cookies = CookieCollection.instance(options, secret).parse(event.cookies ?? [])
+    passable.request.cookies = CookieCollection.instance(options, secret).parse(passable.event.cookies ?? [])
 
-    return next(request, event, ctx)
+    return next(passable)
   }
 }

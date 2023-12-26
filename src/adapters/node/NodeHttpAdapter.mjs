@@ -37,14 +37,15 @@ export class NodeHttpAdapter extends Adapter {
 
   async #requestListener (req, res) {
     try {
-      const request = await this.#mapper.request(req)
+      const request = await this.#mapper.request({ event: req })
       
       this.registerRequest(request)
   
       const response = await this.context.run()
-      const nodeRes  = await this.#mapper.response({ req, res, request, response })
+      const nodeRes  = await this.#mapper.response({ event: req, res, request, response })
   
       await nodeRes.send()
+    
     } catch (error) {
       console.error(error)
       

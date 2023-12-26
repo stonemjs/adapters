@@ -1,5 +1,4 @@
-import { Request } from '@stone-js/http'
-import { Pipeline } from '@stone-js/pipeline'
+import { HTTPMapper } from '../HTTPMapper.mjs'
 import { IpPipe } from '../../pipes/node/request/IpPipe.mjs'
 import { HostPipe } from '../../pipes/node/request/HostPipe.mjs'
 import { BodyPipe } from '../../pipes/node/request/BodyPipe.mjs'
@@ -10,11 +9,8 @@ import { CookiePipe } from '../../pipes/node/request/CookiePipe.mjs'
 import { SendFilePipe } from '../../pipes/node/response/SendFilePipe.mjs'
 import { HeaderStatusPipe } from '../../pipes/node/response/HeaderStatusPipe.mjs'
 
-export class NodeHTTPMapper {
-  #config
-  #container
-
-  #requestPipes = [
+export class NodeHTTPMapper extends HTTPMapper {
+  _requestPipes = [
     IpPipe,
     HostPipe,
     BodyPipe,
@@ -23,36 +19,17 @@ export class NodeHTTPMapper {
     CookiePipe,
   ]
 
-  #responsePipes = [
+  _responsePipes = [
     HeaderStatusPipe,
     SendPipe,
     SendFilePipe,
   ]
 
-  constructor (container) {
-    this.#container = container
-    this.#config    = container.config
+  _getRequestPipes () {
+    return this._requestPipes.concat(this._config.get('http.node.adapter.pipes.request', []))
   }
 
-  request (req) {
-    return new Pipeline(this.#container)
-      .send({}, req)
-      .through(this.#getRequestPipes())
-      .then((data) => new Request(data))
-  }
-
-  response (passable) {
-    return new Pipeline(this.#container)
-      .send(passable)
-      .through(this.#getResponsePipes())
-      .then((v) => v.res)
-  }
-
-  #getRequestPipes () {
-    return this.#requestPipes.concat(this.#config.get('http.node.adapter.pipes.request', []))
-  }
-
-  #getResponsePipes () {
-    return this.#responsePipes.concat(this.#config.get('http.node.adapter.pipes.response', []))
+  _getResponsePipes () {
+    return this._responsePipes.concat(this._config.get('http.node.adapter.pipes.response', []))
   }
 }

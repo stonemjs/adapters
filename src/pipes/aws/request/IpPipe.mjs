@@ -8,22 +8,22 @@ export class IpPipe {
     this.#config = config
   }
 
-  async handler (request, event, ctx, next) {
+  async handler (passable, next) {
     const data = {
       headers: {
-        'x-forwarded-for': event.headers['x-forwarded-for'] ?? event.headers['X-Forwarded-For']
+        'x-forwarded-for': passable.event.headers['x-forwarded-for'] ?? passable.event.headers['X-Forwarded-For']
       },
       connection: {
-        remoteAddress: event.requestContext?.identity?.sourceIp ?? event.requestContext?.http?.sourceIp ?? ''
+        remoteAddress: passable.event.requestContext?.identity?.sourceIp ?? passable.event.requestContext?.http?.sourceIp ?? ''
       }
     }
     
     const isTrusted = isFromTrustedProxy(this.#config.get('http'))
     const addrs = proxyAddr.all(data, isTrusted)
 
-    request.ips = addrs.reverse().pop()
-    request.ip = proxyAddr(data, isTrusted)
+    passable.request.ips = addrs.reverse().pop()
+    passable.request.ip = proxyAddr(data, isTrusted)
 
-    return next(request, event, ctx)
+    return next(passable)
   }
 }
