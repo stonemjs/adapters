@@ -9,8 +9,8 @@ export class CommonPipe {
 
   async handler (request, event, ctx, next) {
     request.headers = event.headers
-    request.protocol = this.#getProtocol()
     request.method = this.#getMethod(event)
+    request.protocol = this.#getProtocol(event)
     request.queryString = event.queryStringParameters
 
     return next(request, event, ctx)

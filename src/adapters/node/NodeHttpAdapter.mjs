@@ -1,8 +1,10 @@
+import mime from 'mime'
 import http from 'node:http'
+import accepts from 'accepts'
 import https from 'node:https'
+import statuses from 'statuses'
 import onFinished from 'on-finished'
 import { Adapter } from '../Adapter.mjs'
-import { Request } from '@stone-js/http'
 import { NodeHTTPMapper } from '../../mappers/node/NodeHTTPMapper.mjs'
 
 export class NodeHttpAdapter extends Adapter {
@@ -13,7 +15,7 @@ export class NodeHttpAdapter extends Adapter {
     super(app, configurations)
 
     this.#options = this.#getOptions()
-    this.#mapper = new NodeHTTPMapper(this.getContext().container)
+    this.#mapper  = new NodeHTTPMapper(this.context.container)
   }
 
   async run () {
@@ -34,27 +36,27 @@ export class NodeHttpAdapter extends Adapter {
   }
 
   async #requestListener (req, res) {
-    const context = this.getContext()
-    const request = await this.#createRequest(req)
-    const response = await context.run()
+    try {
+      const request = await this.#mapper.request(req)
+      
+      this.registerRequest(request)
+  
+      const response = await this.context.run()
+      const nodeRes  = await this.#mapper.response({ req, res, request, response })
+  
+      await nodeRes.send()
+    } catch (error) {
+      console.error(error)
+      
+      const contentType = mime.getType(accepts(req).type(['json', 'html']) ?? 'txt')
+      
+      res.statusCode = 500
+      res.statusMessage = statuses.message[500]
+      res.setHeader('Content-Type', contentType)
+      res.end()
+    }
 
-    res = await this.#mapper.response({ req, res, request, response })
-
-    await res.send()
-
-    onFinished(res, async () => await context.stop())
-  }
-
-  async #createRequest (req) {
-    const context = this.getContext()
-    const request = await this.#mapper.request(req)
-
-    request.getNodeRequest = () => req
-
-    context.registerInstance(Request, request, ['request'])
-    context.registerInstance('originalRequest', request.clone())
-
-    return request
+    onFinished(res, async () => await this.context.stop())
   }
 
   #getOptions () {

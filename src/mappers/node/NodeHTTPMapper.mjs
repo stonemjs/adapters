@@ -14,6 +14,21 @@ export class NodeHTTPMapper {
   #config
   #container
 
+  #requestPipes = [
+    IpPipe,
+    HostPipe,
+    BodyPipe,
+    FilesPipe,
+    CommonPipe,
+    CookiePipe,
+  ]
+
+  #responsePipes = [
+    HeaderStatusPipe,
+    SendPipe,
+    SendFilePipe,
+  ]
+
   constructor (container) {
     this.#container = container
     this.#config    = container.config
@@ -34,21 +49,10 @@ export class NodeHTTPMapper {
   }
 
   #getRequestPipes () {
-    return [
-      IpPipe,
-      HostPipe,
-      BodyPipe,
-      FilesPipe,
-      CommonPipe,
-      CookiePipe,
-    ].concat(this.#config.get('http.node.adapter.pipes.request', []))
+    return this.#requestPipes.concat(this.#config.get('http.node.adapter.pipes.request', []))
   }
 
   #getResponsePipes () {
-    return [
-      HeaderStatusPipe,
-      SendPipe,
-      SendFilePipe,
-    ].concat(this.#config.get('http.node.adapter.pipes.response', []))
+    return this.#responsePipes.concat(this.#config.get('http.node.adapter.pipes.response', []))
   }
 }

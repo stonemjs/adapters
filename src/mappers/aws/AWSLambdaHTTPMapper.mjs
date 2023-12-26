@@ -5,9 +5,19 @@ import { CommonPipe } from '../../pipes/aws/request/CommonPipe.mjs'
 import { CookiePipe } from '../../pipes/aws/request/CookiePipe.mjs'
 import { HeaderStatusPipe } from '../../pipes/aws/response/HeaderStatusPipe.mjs'
 
-export class AwsHTTPMapper {
+export class AWSLambdaHTTPMapper {
   #config
   #container
+
+  #requestPipes = [
+    IpPipe,
+    CommonPipe,
+    CookiePipe,
+  ]
+
+  #responsePipes = [
+    HeaderStatusPipe,
+  ]
 
   constructor (container) {
     this.#container = container
@@ -29,16 +39,10 @@ export class AwsHTTPMapper {
   }
 
   #getRequestPipes () {
-    return [
-      IpPipe,
-      CommonPipe,
-      CookiePipe
-    ].concat(this.#config.get('http.aws.adapter.pipes.request', []))
+    return this.#requestPipes.concat(this.#config.get('http.aws.lambda.adapter.pipes.request', []))
   }
 
   #getResponsePipes () {
-    return [
-      HeaderStatusPipe,
-    ].concat(this.#config.get('http.aws.adapter.pipes.response', []))
+    return this.#responsePipes.concat(this.#config.get('http.aws.lambda.adapter.pipes.response', []))
   }
 }
