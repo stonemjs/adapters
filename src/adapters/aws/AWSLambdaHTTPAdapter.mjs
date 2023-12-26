@@ -17,19 +17,18 @@ export class AWSLambdaHTTPAdapter extends Adapter {
     return async (event, ctx) => {
       try {
         const request = await this.#mapper.request({ event, ctx })
-        
+
         this.registerRequest(request)
 
-        const response  = await this.context.run()
+        const response = await this.context.run()
         const lambdaRes = await this.#mapper.response({ event, ctx, res: {}, request, response })
-        
+
         await this.context.stop()
 
         return lambdaRes
-      
       } catch (error) {
         console.error(error)
-        
+
         const contentType = mime.getType(accepts(event).type(['json', 'html']) ?? 'txt')
 
         return {

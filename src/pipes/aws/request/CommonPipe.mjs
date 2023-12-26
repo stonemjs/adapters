@@ -17,10 +17,10 @@ export class CommonPipe {
   }
 
   #getMethod (event) {
-    return event.httpMethod
-      ?? event.requestContext?.httpMethod
-      ?? event.requestContext?.http?.method
-      ?? 'GET'
+    return event.httpMethod ??
+      event.requestContext?.httpMethod ??
+      event.requestContext?.http?.method ??
+      'GET'
   }
 
   #getProtocol (event) {

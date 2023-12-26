@@ -9,7 +9,7 @@ export class CookiePipe {
 
   async handler (passable, next) {
     const options = this.#config.get('http.cookie.options')
-    const secret  = this.#config.get('http.cookie.secret', this.#config.get('http.secret'))
+    const secret = this.#config.get('http.cookie.secret', this.#config.get('http.secret'))
 
     passable.request.cookies = CookieCollection.instance(options, secret).parse(passable.event.cookies ?? [])
 

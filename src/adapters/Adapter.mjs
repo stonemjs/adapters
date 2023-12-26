@@ -25,7 +25,7 @@ export class Adapter {
   }
 
   get context () {
-    return this.#context 
+    return this.#context
   }
 
   registerRequest (request) {

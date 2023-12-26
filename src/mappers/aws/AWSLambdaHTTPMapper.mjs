@@ -8,11 +8,11 @@ export class AWSLambdaHTTPMapper extends HTTPMapper {
   _requestPipes = [
     IpPipe,
     CommonPipe,
-    CookiePipe,
+    CookiePipe
   ]
 
   _responsePipes = [
-    HeaderStatusPipe,
+    HeaderStatusPipe
   ]
 
   _getRequestPipes () {

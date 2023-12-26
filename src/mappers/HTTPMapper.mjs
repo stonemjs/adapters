@@ -4,9 +4,9 @@ import { Pipeline } from '@stone-js/pipeline'
 export class HTTPMapper {
   constructor (container) {
     this._container = container
-    this._config    = container.config
+    this._config = container.config
 
-    this._requestPipes  = []
+    this._requestPipes = []
     this._responsePipes = []
   }
 

@@ -15,7 +15,7 @@ export class NodeHttpAdapter extends Adapter {
     super(app, configurations)
 
     this.#options = this.#getOptions()
-    this.#mapper  = new NodeHTTPMapper(this.context.container)
+    this.#mapper = new NodeHTTPMapper(this.context.container)
   }
 
   async run () {
@@ -38,19 +38,18 @@ export class NodeHttpAdapter extends Adapter {
   async #requestListener (req, res) {
     try {
       const request = await this.#mapper.request({ event: req })
-      
+
       this.registerRequest(request)
-  
+
       const response = await this.context.run()
-      const nodeRes  = await this.#mapper.response({ event: req, res, request, response })
-  
+      const nodeRes = await this.#mapper.response({ event: req, res, request, response })
+
       await nodeRes.send()
-    
     } catch (error) {
       console.error(error)
-      
+
       const contentType = mime.getType(accepts(req).type(['json', 'html']) ?? 'txt')
-      
+
       res.statusCode = 500
       res.statusMessage = statuses.message[500]
       res.setHeader('Content-Type', contentType)

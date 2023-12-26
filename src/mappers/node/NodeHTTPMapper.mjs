@@ -16,13 +16,13 @@ export class NodeHTTPMapper extends HTTPMapper {
     BodyPipe,
     FilesPipe,
     CommonPipe,
-    CookiePipe,
+    CookiePipe
   ]
 
   _responsePipes = [
     HeaderStatusPipe,
     SendPipe,
-    SendFilePipe,
+    SendFilePipe
   ]
 
   _getRequestPipes () {

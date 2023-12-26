@@ -8,7 +8,7 @@ export class SendFilePipe {
   #context
 
   constructor ({ context, config }) {
-    this.#config  = config
+    this.#config = config
     this.#context = context
   }
 

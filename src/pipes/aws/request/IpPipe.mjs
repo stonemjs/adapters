@@ -17,7 +17,7 @@ export class IpPipe {
         remoteAddress: passable.event.requestContext?.identity?.sourceIp ?? passable.event.requestContext?.http?.sourceIp ?? ''
       }
     }
-    
+
     const isTrusted = isFromTrustedProxy(this.#config.get('http'))
     const addrs = proxyAddr.all(data, isTrusted)
 
