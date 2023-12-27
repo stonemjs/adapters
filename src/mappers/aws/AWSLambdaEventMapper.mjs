@@ -2,10 +2,10 @@ import { EventMapper } from '../EventMapper.mjs'
 import { SendPipe } from '../../pipes/aws/event/response/SendPipe.mjs'
 
 export class AWSLambdaEventMapper extends EventMapper {
-  _requestPipes  = []
+  _requestPipes = []
 
   _responsePipes = [
-    SendPipe,
+    SendPipe
   ]
 
   _getRequestPipes () {
