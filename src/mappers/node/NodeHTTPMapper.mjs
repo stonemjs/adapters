@@ -26,10 +26,10 @@ export class NodeHTTPMapper extends HTTPMapper {
   ]
 
   _getRequestPipes () {
-    return this._requestPipes.concat(this._config.get('http.node.adapter.pipes.request', []))
+    return this._requestPipes.concat(this._config.get('adapter.http.node.pipe.request', []))
   }
 
   _getResponsePipes () {
-    return this._responsePipes.concat(this._config.get('http.node.adapter.pipes.response', []))
+    return this._responsePipes.concat(this._config.get('adapter.http.node.pipe.response', []))
   }
 }

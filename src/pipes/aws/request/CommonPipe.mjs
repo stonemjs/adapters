@@ -12,6 +12,7 @@ export class CommonPipe {
     passable.request.method = this.#getMethod(passable.event)
     passable.request.protocol = this.#getProtocol(passable.event)
     passable.request.queryString = passable.event.queryStringParameters
+    passable.request.lambda = { event: passable.event, context: passable.ctx }
 
     return next(passable)
   }
@@ -25,14 +26,8 @@ export class CommonPipe {
 
   #getProtocol (event) {
     const proto = event.socket.encrypted ? 'https' : 'http'
-    if (!isFromTrustedProxy(event.socket.remoteAddress)) return proto
+    const isTrusted = isFromTrustedProxy(this.#config.get('http'))
+    if (!isTrusted(event.socket.remoteAddress)) return proto
     return (event.headers['X-Forwarded-Proto'] || proto).split(',').shift().trim()
-  }
-
-  #createRequest (event, context, options) {
-    const url = new URL(`${event.rawPath}?=${event.rawQueryString}`, `http://${options.host}`)
-    const request = new Request(url, new Headers(event.headers), event.requestContext.http.method, event.body)
-    request.lambda = { event, context }
-    return request
   }
 }

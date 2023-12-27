@@ -4,6 +4,7 @@ import accepts from 'accepts'
 import https from 'node:https'
 import statuses from 'statuses'
 import onFinished from 'on-finished'
+import { Request } from '@stone-js/http'
 import { Adapter } from '../Adapter.mjs'
 import { NodeHTTPMapper } from '../../mappers/node/NodeHTTPMapper.mjs'
 
@@ -37,40 +38,50 @@ export class NodeHttpAdapter extends Adapter {
 
   async #requestListener (req, res) {
     try {
-      const request = await this.#mapper.request({ event: req })
-
-      this.registerRequest(request)
-
+      const request  = await this.#makeRequest({ event: req })
       const response = await this.context.run()
-      const nodeRes = await this.#mapper.response({ event: req, res, request, response })
+      const nodeRes  = await this.#mapper.response({ event: req, res, request, response })
 
       await nodeRes.send()
     } catch (error) {
-      console.error(error)
-
-      const contentType = mime.getType(accepts(req).type(['json', 'html']) ?? 'txt')
-
-      res.statusCode = 500
-      res.statusMessage = statuses.message[500]
-      res.setHeader('Content-Type', contentType)
-      res.end()
+      this.#handleError(error, req, res)
     }
 
     onFinished(res, async () => await this.context.stop())
   }
 
+  async #makeRequest (passable) {
+    const request = await this.#mapper.request(passable)
+
+    this.context.registerInstance(Request, request, ['request'])
+    this.context.registerInstance('originalRequest', request.clone())
+
+    return request
+  }
+
+  #handleError (error, req, res) {
+    console.error(error)
+
+    const contentType = mime.getType(accepts(req).type(['json', 'html']) ?? 'txt')
+
+    res.statusCode = 500
+    res.statusMessage = statuses.message[500]
+    res.setHeader('Content-Type', contentType)
+    res.end()
+  }
+
   #getOptions () {
     return {
       isDebug: this.config.get('app.debug', false),
-      port: this.config.get('http.server.port', 8080),
+      port: this.config.get('adapter.http.node.server.port', 8080),
       get server () { return this.isSecure ? https : http },
       get host () { return `${this.hostname}:${this.port}` },
-      hostname: this.config.get('http.server.hostname', 'localhost'),
-      isSecure: this.config.get('http.server.protocol', 'http') === 'https',
+      hostname: this.config.get('adapter.http.node.server.hostname', 'localhost'),
+      isSecure: this.config.get('adapter.http.node.server.protocol', 'http') === 'https',
       serverOptions: {
-        key: this.config.get('http.server.key', undefined),
-        cert: this.config.get('http.server.cert', undefined),
-        requestTimeout: this.config.get('http.server.requestTimeout', 300000)
+        key: this.config.get('adapter.http.node.server.key', undefined),
+        cert: this.config.get('adapter.http.node.server.cert', undefined),
+        requestTimeout: this.config.get('adapter.http.node.server.requestTimeout', 300000)
       }
     }
   }

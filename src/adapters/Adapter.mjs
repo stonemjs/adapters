@@ -1,5 +1,4 @@
-import { Request } from '@stone-js/http'
-import { StoneFactory, LogicException, RuntimeException, isFunction } from '@stone-js/core'
+import { StoneFactory, LogicException, isFunction } from '@stone-js/core'
 
 export class Adapter {
   #context
@@ -26,17 +25,6 @@ export class Adapter {
 
   get context () {
     return this.#context
-  }
-
-  registerRequest (request) {
-    if (request instanceof Request) {
-      this.context.registerInstance(Request, request, ['request'])
-      this.context.registerInstance('originalRequest', request.clone())
-    } else {
-      throw new RuntimeException('Request must be an instance of StoneHTTP Request.')
-    }
-
-    return this
   }
 
   run () {

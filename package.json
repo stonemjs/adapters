@@ -56,7 +56,8 @@
   },
   "dependencies": {
     "@stone-js/core": "^1.0.4",
-    "@stone-js/pipeline": "^1.0.1"
+    "@stone-js/pipeline": "^1.0.1",
+    "busboy": "^1.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",

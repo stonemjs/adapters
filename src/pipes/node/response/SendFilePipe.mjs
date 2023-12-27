@@ -37,7 +37,7 @@ export class SendFilePipe {
     let streaming
     let done = false
 
-    const file = send(req, response.getEncodedFilePath(), this.#config.get('files', {}))
+    const file = send(req, response.getEncodedFilePath(), this.#config.get('http.files', {}))
 
     const onaborted = () => {
       if (!done) {

@@ -2,8 +2,8 @@ import bytes from 'bytes'
 import typeIs from 'type-is'
 import rawBody from 'raw-body'
 import bodyParser from 'co-body'
-import contentType from 'content-type'
 import { RuntimeException } from '@stone-js/core'
+import { getCharset, getType, isMultipart } from '../../../utils.mjs'
 
 export class BodyPipe {
   #config
@@ -13,15 +13,11 @@ export class BodyPipe {
   }
 
   async handler (passable, next) {
-    if (!this.#isMultipart(passable.req)) {
+    if (!isMultipart(passable.req)) {
       passable.request.body = await this.#getBody(passable.req)
     }
 
     return next(passable)
-  }
-
-  #isMultipart (req) {
-    return typeIs(req, ['multipart']) === 'multipart'
   }
 
   async #getBody (req) {
@@ -29,8 +25,8 @@ export class BodyPipe {
       return {}
     }
 
-    const type = this.#getType(req)
-    const encoding = this.#getCharset(req)
+    const type = getType(req, this.#config)
+    const encoding = getCharset(req, this.#config)
     const length = req.headers['content-length']
     const limit = bytes.parse(this.#config.get('http.body.limit', '100kb'))
 
@@ -53,22 +49,6 @@ export class BodyPipe {
       }
     } catch (error) {
       throw new RuntimeException(error.message, error.code, error)
-    }
-  }
-
-  #getType (req) {
-    try {
-      return contentType.parse(req).type
-    } catch (_) {
-      return this.#config.get('http.body.type', 'text/plain')
-    }
-  }
-
-  #getCharset (req) {
-    try {
-      return contentType.parse(req).parameters.charset
-    } catch (_) {
-      return this.#config.get('http.body.defaultCharset', 'utf-8')
     }
   }
 }
