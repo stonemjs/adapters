@@ -14,7 +14,11 @@ export class SendFilePipe {
 
   handler (passable, next) {
     if (passable.response instanceof BinaryFileResponse) {
-      passable.res.send = () => this.#sendFile(passable)
+      if (passable.request.isMethod('HEAD')) {
+        passable.res.send = () => passable.res.end()
+      } else {
+        passable.res.send = () => this.#sendFile(passable)
+      }
     }
 
     return next(passable)

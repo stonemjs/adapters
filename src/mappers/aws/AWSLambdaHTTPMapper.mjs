@@ -6,6 +6,7 @@ import { SendPipe } from '../../pipes/aws/response/SendPipe.mjs'
 import { FilesPipe } from '../../pipes/aws/request/FilesPipe.mjs'
 import { CommonPipe } from '../../pipes/aws/request/CommonPipe.mjs'
 import { CookiePipe } from '../../pipes/aws/request/CookiePipe.mjs'
+import { SendFilePipe } from '../../pipes/aws/response/SendFilePipe.mjs'
 
 export class AWSLambdaHTTPMapper extends HTTPMapper {
   _requestPipes = [
@@ -19,6 +20,7 @@ export class AWSLambdaHTTPMapper extends HTTPMapper {
 
   _responsePipes = [
     SendPipe,
+    SendFilePipe,
   ]
 
   _getRequestPipes () {
