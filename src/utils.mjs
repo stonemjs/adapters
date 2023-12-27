@@ -45,7 +45,7 @@ export const isFromTrustedProxy = (options) => (ip) => {
 }
 
 export const getHost = (ip, headers, config) => {
-  let host  = null
+  let host = null
   const url = new URL(config.get('http.url'))
   const isTrusted = isFromTrustedProxy(config.get('http'))
   const allSubdomainRegex = new RegExp(`^(.+.)?${url.hostname}$`)
@@ -91,8 +91,8 @@ export const getHost = (ip, headers, config) => {
 export const getFileFromRequest = (req, config) => {
   return new Promise((resolve, reject) => {
     const headers = req.headers
-    const result  = { files: {}, fields: {} }
-    const busboy  = new Busboy({ headers, ...config.get('http.files', {}) })
+    const result = { files: {}, fields: {} }
+    const busboy = new Busboy({ headers, ...config.get('http.files', {}) })
 
     busboy
       .on('close', () => resolve(result))
@@ -111,7 +111,7 @@ export const getFileFromRequest = (req, config) => {
 
         file.pipe(createWriteStream(filepath))
       })
-    
+
     if (req.pipe) {
       req.pipe(busboy)
     } else {

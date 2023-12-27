@@ -17,8 +17,8 @@ export class AWSLambdaHTTPAdapter extends Adapter {
   async run () {
     return async (event, ctx) => {
       try {
-        const request   = await this.#makeRequest({ event, ctx })
-        const response  = await this.context.run()
+        const request = await this.#makeRequest({ event, ctx })
+        const response = await this.context.run()
         const lambdaRes = await this.#mapper.response({ event, ctx, res: {}, request, response })
 
         await this.context.stop()

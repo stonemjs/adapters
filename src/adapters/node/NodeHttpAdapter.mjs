@@ -16,7 +16,7 @@ export class NodeHttpAdapter extends Adapter {
     super(app, configurations)
 
     this.#options = this.#getOptions()
-    this.#mapper  = new NodeHTTPMapper(this.context.container)
+    this.#mapper = new NodeHTTPMapper(this.context.container)
   }
 
   async run () {
@@ -38,9 +38,9 @@ export class NodeHttpAdapter extends Adapter {
 
   async #requestListener (req, res) {
     try {
-      const request  = await this.#makeRequest({ req })
+      const request = await this.#makeRequest({ req })
       const response = await this.context.run()
-      const nodeRes  = await this.#mapper.response({ req, res, request, response })
+      const nodeRes = await this.#mapper.response({ req, res, request, response })
 
       await nodeRes.send()
     } catch (error) {

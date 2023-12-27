@@ -20,7 +20,7 @@ export class AWSLambdaHTTPMapper extends HTTPMapper {
 
   _responsePipes = [
     SendPipe,
-    SendFilePipe,
+    SendFilePipe
   ]
 
   _getRequestPipes () {

@@ -1,6 +1,6 @@
 import typeIs from 'type-is'
 import { FileException } from '@stone-js/http'
-import { isMultipart } from '../../../utils.mjs'
+import { getFileFromRequest, isMultipart } from '../../../utils.mjs'
 
 export class FilesPipe {
   #config

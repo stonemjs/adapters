@@ -6,7 +6,7 @@ export class CommonPipe {
   constructor ({ config }) {
     this.#config = config
   }
-  
+
   async handler (passable, next) {
     passable.request.node = { req: passable.req }
     passable.request.method = passable.req.method

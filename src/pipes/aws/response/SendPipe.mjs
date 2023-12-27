@@ -7,14 +7,14 @@ export class SendPipe {
         passable.res.send = () => ({
           headers: passable.response.headers,
           statusCode: passable.response.statusCode ?? 500,
-          statusMessage: passable.response.statusMessage ?? statuses.message[500],
+          statusMessage: passable.response.statusMessage ?? statuses.message[500]
         })
       } else {
         passable.res.send = () => ({
           body: passable.response.content,
           headers: passable.response.headers,
           statusCode: passable.response.statusCode ?? 500,
-          statusMessage: passable.response.statusMessage ?? statuses.message[500],
+          statusMessage: passable.response.statusMessage ?? statuses.message[500]
         })
       }
     }

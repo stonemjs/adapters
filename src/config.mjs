@@ -12,7 +12,7 @@ export const adapterConfig = {
         protocol: 'http',
         hostname: 'localhost',
         requestTimeout: 300000
-      },
+      }
     },
     aws: {
       lambda: {
@@ -21,6 +21,6 @@ export const adapterConfig = {
           response: []
         }
       }
-    },
+    }
   }
 }

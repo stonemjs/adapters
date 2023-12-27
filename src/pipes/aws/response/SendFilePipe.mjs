@@ -8,14 +8,14 @@ export class SendFilePipe {
         passable.res.send = () => ({
           headers: passable.response.headers,
           statusCode: passable.response.statusCode ?? 500,
-          statusMessage: passable.response.statusMessage ?? statuses.message[500],
+          statusMessage: passable.response.statusMessage ?? statuses.message[500]
         })
       } else {
         passable.res.send = () => ({
           headers: passable.response.headers,
           body: passable.response.getFile().getContent(),
           statusCode: passable.response.statusCode ?? 500,
-          statusMessage: passable.response.statusMessage ?? statuses.message[500],
+          statusMessage: passable.response.statusMessage ?? statuses.message[500]
         })
       }
     }

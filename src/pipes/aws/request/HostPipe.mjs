@@ -9,9 +9,7 @@ export class HostPipe {
   }
 
   async handler (passable, next) {
-    const url = this.#getUrl(passable.event)
-
-    passable.request.url = url
+    passable.request.url = this.#getUrl(passable.event)
 
     return next(passable)
   }
@@ -19,6 +17,6 @@ export class HostPipe {
   #getUrl (event) {
     const remoteAddress = event.requestContext?.identity?.sourceIp ?? event.requestContext?.http?.sourceIp
     const host = getHost(remoteAddress, event.headers, this.#config)
-    return new URL(req.url, `http://${host}`)
+    return new URL(event.path ?? event.rawPath ?? '/', `http://${host}`)
   }
 }
