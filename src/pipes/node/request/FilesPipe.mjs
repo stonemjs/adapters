@@ -1,7 +1,6 @@
 import typeIs from 'type-is'
-import formidable from 'formidable'
+import { FileException } from '@stone-js/http'
 import { isMultipart } from '../../../utils.mjs'
-import { FileException, UploadedFile } from '@stone-js/http'
 
 export class FilesPipe {
   #config
@@ -23,14 +22,8 @@ export class FilesPipe {
   async #getFiles (req) {
     if (!typeIs.hasBody(req)) return {}
 
-    const form = formidable(this.#config.get('http.files', {}))
-
     try {
-      const [fields, files] = await form.parse(req)
-      return {
-        fields,
-        files: files.map(v => new UploadedFile(v.filepath, v.originalFilename, v.mimetype))
-      }
+      return await getFileFromRequest(req, this.#config)
     } catch (error) {
       throw new FileException(error.message, error.code, error)
     }

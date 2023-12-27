@@ -1,8 +1,13 @@
+import Busboy from 'busboy'
 import typeIs from 'type-is'
 import { URL } from 'node:url'
+import { join } from 'node:path'
+import { tmpdir } from 'node:os'
 import contentType from 'content-type'
+import { randomUUID } from 'node:crypto'
 import ipRangeCheck from 'ip-range-check'
-import { SuspiciousOperationException } from '@stone-js/http'
+import { createWriteStream } from 'node:fs'
+import { SuspiciousOperationException, UploadedFile } from '@stone-js/http'
 
 export const isMultipart = (req) => {
   return typeIs(req, ['multipart']) === 'multipart'
@@ -81,4 +86,37 @@ export const getHost = (ip, headers, config) => {
   }
 
   return host
+}
+
+export const getFileFromRequest = (req, config) => {
+  return new Promise((resolve, reject) => {
+    const headers = req.headers
+    const result  = { files: {}, fields: {} }
+    const busboy  = new Busboy({ headers, ...config.get('http.files', {}) })
+
+    busboy
+      .on('close', () => resolve(result))
+      .on('error', (error) => reject(error))
+      .on('field', (fieldname, value) => {
+        result.fields[fieldname] = value
+      })
+      .on('file', (fieldname, file, info) => {
+        result.files[fieldname] ??= []
+        const { filename, mimeType } = info
+        const filepath = join(tmpdir(), `${config.get('http.files.prefix', 'stone-upload')}-${randomUUID()}`)
+
+        file.on('close', () => {
+          result.files[fieldname].push(new UploadedFile(filepath, filename, mimeType))
+        })
+
+        file.pipe(createWriteStream(filepath))
+      })
+    
+    if (req.pipe) {
+      req.pipe(busboy)
+    } else {
+      busboy.write(req.body, req.encoding)
+      busboy.end()
+    }
+  })
 }

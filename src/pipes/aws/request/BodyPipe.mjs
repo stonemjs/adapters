@@ -28,7 +28,7 @@ export class BodyPipe {
       return {}
     }
     
-    if (Buffer.from(event.body, encoding).length > limit) {
+    if (Buffer.byteLength(event.body, encoding) > limit) {
       throw new RuntimeException(`Body length exceed the limit ${limit}`)
     }
 
