@@ -22,5 +22,15 @@ export const adapterConfig = {
         }
       }
     }
+  },
+  event: {
+    aws: {
+      lambda: {
+        pipe: {
+          request: [],
+          response: []
+        }
+      }
+    }
   }
 }

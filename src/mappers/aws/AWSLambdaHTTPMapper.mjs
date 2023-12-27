@@ -1,12 +1,12 @@
 import { HTTPMapper } from '../HTTPMapper.mjs'
-import { IpPipe } from '../../pipes/aws/request/IpPipe.mjs'
-import { HostPipe } from '../../pipes/aws/request/HostPipe.mjs'
-import { BodyPipe } from '../../pipes/aws/request/BodyPipe.mjs'
-import { SendPipe } from '../../pipes/aws/response/SendPipe.mjs'
-import { FilesPipe } from '../../pipes/aws/request/FilesPipe.mjs'
-import { CommonPipe } from '../../pipes/aws/request/CommonPipe.mjs'
-import { CookiePipe } from '../../pipes/aws/request/CookiePipe.mjs'
-import { SendFilePipe } from '../../pipes/aws/response/SendFilePipe.mjs'
+import { IpPipe } from '../../pipes/aws/http/request/IpPipe.mjs'
+import { HostPipe } from '../../pipes/aws/http/request/HostPipe.mjs'
+import { BodyPipe } from '../../pipes/aws/http/request/BodyPipe.mjs'
+import { SendPipe } from '../../pipes/aws/http/response/SendPipe.mjs'
+import { FilesPipe } from '../../pipes/aws/http/request/FilesPipe.mjs'
+import { CommonPipe } from '../../pipes/aws/http/request/CommonPipe.mjs'
+import { CookiePipe } from '../../pipes/aws/http/request/CookiePipe.mjs'
+import { SendFilePipe } from '../../pipes/aws/http/response/SendFilePipe.mjs'
 
 export class AWSLambdaHTTPMapper extends HTTPMapper {
   _requestPipes = [
