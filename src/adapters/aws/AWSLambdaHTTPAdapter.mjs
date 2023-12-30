@@ -1,7 +1,6 @@
 import mime from 'mime'
 import accepts from 'accepts'
 import statuses from 'statuses'
-import { Request } from '@stone-js/http'
 import { Adapter } from '../Adapter.mjs'
 import { AWSLambdaHTTPMapper } from '../../mappers/aws/AWSLambdaHTTPMapper.mjs'
 
@@ -17,8 +16,8 @@ export class AWSLambdaHTTPAdapter extends Adapter {
   async run () {
     return async (event, ctx) => {
       try {
-        const request = await this.#makeRequest({ event, ctx })
-        const response = await this.context.run()
+        const request   = await this.#mapper.request({ event, ctx })
+        const response  = await this.context.run(request)
         const lambdaRes = await this.#mapper.response({ event, ctx, res: {}, request, response })
 
         await this.context.stop()
@@ -28,15 +27,6 @@ export class AWSLambdaHTTPAdapter extends Adapter {
         return this.#handleError(error, event)
       }
     }
-  }
-
-  async #makeRequest (passable) {
-    const request = await this.#mapper.request(passable)
-
-    this.context.registerInstance(Request, request, ['request'])
-    this.context.registerInstance('originalRequest', request.clone())
-
-    return request
   }
 
   #handleError (error, event) {

@@ -4,10 +4,11 @@ import accepts from 'accepts'
 import https from 'node:https'
 import statuses from 'statuses'
 import onFinished from 'on-finished'
+import { Request } from '@stone-js/http'
 import { Adapter } from '../Adapter.mjs'
 import { NodeHTTPMapper } from '../../mappers/node/NodeHTTPMapper.mjs'
 
-export class NodeHTTPAdapter extends Adapter {
+export class NodeConsoleAdapter extends Adapter {
   #mapper
   #options
 
@@ -20,26 +21,15 @@ export class NodeHTTPAdapter extends Adapter {
 
   async run () {
     return new Promise((resolve, reject) => {
-      this
-        .#options
-        .server
-        .createServer(this.#options.serverOptions, this.#requestListener)
-        .listen(this.#options.port, this.#options.hostname, () => {
-          this.#options.isDebug && console.info('Server started at:', this.#options.host)
-          resolve()
-        })
-        .once('error', error => {
-          this.#options.isDebug && console.error('An error occured', error)
-          reject(error)
-        })
+      
     })
   }
 
   async #requestListener (req, res) {
     try {
-      const request  = await this.#mapper.request({ req })
-      const response = await this.context.run(request)
-      const nodeRes  = await this.#mapper.response({ req, res, request, response })
+      const request = await this.#makeRequest({ req })
+      const response = await this.context.run()
+      const nodeRes = await this.#mapper.response({ req, res, request, response })
 
       await nodeRes.send()
     } catch (error) {
@@ -47,6 +37,15 @@ export class NodeHTTPAdapter extends Adapter {
     }
 
     onFinished(res, async () => await this.context.stop())
+  }
+
+  async #makeRequest (passable) {
+    const request = await this.#mapper.request(passable)
+
+    this.context.registerInstance(Request, request, ['request'])
+    this.context.registerInstance('originalRequest', request.clone())
+
+    return request
   }
 
   #handleError (error, req, res) {

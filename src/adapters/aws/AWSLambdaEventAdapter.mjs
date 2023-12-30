@@ -13,8 +13,8 @@ export class AWSLambdaEventAdapter extends Adapter {
   async run () {
     return async (event, ctx) => {
       try {
-        event = await this.#mapEvent({ event, ctx })
-        const response = await this.context.run()
+        event           = await this.#mapper.request({ event, ctx })
+        const response  = await this.context.run({ event, ctx })
         const lambdaRes = await this.#mapper.response({ event, ctx, res: {}, response })
 
         await this.context.stop()
@@ -24,15 +24,6 @@ export class AWSLambdaEventAdapter extends Adapter {
         return this.#handleError(error, event)
       }
     }
-  }
-
-  async #mapEvent (passable) {
-    const event = await this.#mapper.request(passable)
-
-    this.context.registerInstance('event', event)
-    this.context.registerInstance('sourceContext', passable.ctx)
-
-    return event
   }
 
   #handleError (error) {

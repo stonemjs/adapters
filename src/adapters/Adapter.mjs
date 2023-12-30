@@ -19,6 +19,10 @@ export class Adapter {
     return new this(app, configurations)
   }
 
+  static createAndRun (app, configurations = {}) {
+    return new this(app, configurations).run()
+  }
+
   get config () {
     return this.#configurations
   }

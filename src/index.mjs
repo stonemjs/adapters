@@ -1,5 +1,5 @@
 export { adapterConfig } from './config.mjs'
 export { Adapter } from './adapters/Adapter.mjs'
-export { NodeHttpAdapter } from './adapters/node/NodeHttpAdapter.mjs'
+export { NodeHTTPAdapter } from './adapters/node/NodeHTTPAdapter.mjs'
 export { AWSLambdaHTTPAdapter } from './adapters/aws/AWSLambdaHTTPAdapter.mjs'
 export { AWSLambdaEventAdapter } from './adapters/aws/AWSLambdaEventAdapter.mjs'
