@@ -29,7 +29,7 @@ export class NodeConsoleAdapter extends Adapter {
 
     const handler = this._handlerFactory()
     const container = handler.container
-    const builder = yargs(hideBin(argv))
+    const builder = yargs(hideBin(argv)).scriptName('stone')
 
     this._setPlatform(container, NODE_CONSOLE_PLATFORM)
 

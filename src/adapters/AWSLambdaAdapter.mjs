@@ -26,13 +26,17 @@ export class AWSLambdaAdapter extends Adapter {
       const handler = this._handlerFactory()
       const container = handler.container
 
-      this._setPlatform(container, AWS_LAMBDA_PLATFORM)
+      try {
+        this._setPlatform(container, AWS_LAMBDA_PLATFORM)
 
-      container?.instance('awsContext', context)
+        container?.instance('awsContext', context)
 
-      await this._beforeHandle(handler)
+        await this._beforeHandle(handler)
 
-      return await this._onMessageReceived(handler, { message, context })
+        return await this._onMessageReceived(handler, { message, context })
+      } catch (error) {
+        return this._handleError(container, error, { message })
+      }
     }
   }
 
@@ -48,11 +52,6 @@ export class AWSLambdaAdapter extends Adapter {
 
     await super._onInit()
   }
-
-  // #eventResolver () {
-  //   url = new URL('', this.config.get('app.baseUrl', 'http://localhost:8080'))
-  //   return (passable) => IncomingEvent.create({ url, metadata: passable.event })
-  // }
 
   /**
    * Handle error.

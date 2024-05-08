@@ -110,12 +110,16 @@ export class NodeHTTPAdapter extends Adapter {
     const handler = this._handlerFactory()
     const container = handler.container
 
-    this._setPlatform(container, NODE_HTTP_PLATFORM)
+    try {
+      this._setPlatform(container, NODE_HTTP_PLATFORM)
 
-    container?.instance('nodeServer', this.#server)
+      container?.instance('nodeServer', this.#server)
 
-    await this._beforeHandle(handler)
-    await this._onMessageReceived(handler, { message, response })
+      await this._beforeHandle(handler)
+      await this._onMessageReceived(handler, { message, response })
+    } catch (error) {
+      this._handleError(container, error, { message, response })
+    }
   }
 
   #catchUncaughtExceptionListener () {
@@ -129,10 +133,11 @@ export class NodeHTTPAdapter extends Adapter {
 
         setTimeout(() => process.abort(), 1000).unref()
 
-        process.exit(1)
+        throw error
       })
       .on('unhandledRejection', (reason, promise) => {
         this._getLogger().error(`Unhandled Rejection at: ${promise}, reason: ${reason}`)
+        throw reason
       })
   }
 }
