@@ -68,14 +68,12 @@
     "test:html": "npm run test:cvg -- --coverageReporters=html text",
     "test:lcov": "npm run test:cvg -- --coverageReporters=lcov text"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@stone-js/common": "^0.0.1",
     "@stone-js/config": "^0.0.1",
     "@stone-js/http": "^0.0.1",
     "@stone-js/pipeline": "^0.0.1",
-    "@stone-js/service-container": "^0.0.1"
-  },
-  "dependencies": {
+    "@stone-js/service-container": "^0.0.1",
     "accepts": "^1.3.8",
     "busboy": "^1.6.0",
     "bytes": "^3.1.2",
