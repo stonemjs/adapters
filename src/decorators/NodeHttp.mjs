@@ -1,7 +1,7 @@
 import deepmerge from 'deepmerge'
 import { NODE_HTTP_PLATFORM } from '@stone-js/adapters'
-import { nodeHttpOptions } from '@stone-js/adapters/config'
 import { classLevelDecoratorChecker } from '@stone-js/common'
+import { nodeHttpAdapterOptions } from '@stone-js/adapters/config'
 
 /**
  * Interface for representing a Middleware.
@@ -24,6 +24,7 @@ import { classLevelDecoratorChecker } from '@stone-js/common'
  * @typedef  {Object} adapterOptions
  * @property {string} url
  * @property {string} alias
+ * @property {boolean} default
  * @property {Object} middleware
  * @property {(Middlewareable[]|string[])} middleware.input
  * @property {(Middlewareable[]|string[])} middleware.output
@@ -44,9 +45,10 @@ export const NodeHttp = (options = {}) => {
 
     const metadata = {
       adapters: [
-        deepmerge(nodeHttpOptions.adapters[0], {
+        deepmerge(nodeHttpAdapterOptions.adapters[0], {
           app: {
             adapter: {
+              default: options.default ?? false,
               url: options.url ?? 'http://localhost:8080',
               alias: options.alias ?? NODE_HTTP_PLATFORM
             },

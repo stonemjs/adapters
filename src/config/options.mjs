@@ -18,7 +18,7 @@ import {
  *
  * @returns {Object}
 */
-export const nodeHttpOptions = {
+export const nodeHttpAdapterOptions = {
   // Adapters namespace
   adapters: [{
     // App namespace
@@ -31,7 +31,7 @@ export const nodeHttpOptions = {
         alias: NODE_HTTP_PLATFORM,
 
         // Here you can define your default adapter
-        default: true,
+        default: false,
 
         // Adapter class constructor.
         type: NodeHTTPAdapter,
