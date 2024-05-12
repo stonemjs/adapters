@@ -33,9 +33,17 @@
       "types": "./dist/types/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./config": {
+      "types": "./dist/types/config.d.ts",
+      "default": "./dist/config.js"
+    },
     "./decorators": {
       "types": "./dist/types/decorators.d.ts",
       "default": "./dist/decorators.js"
+    },
+    "./utils": {
+      "types": "./dist/types/utils.d.ts",
+      "default": "./dist/utils.js"
     }
   },
   "engines": {
@@ -61,6 +69,7 @@
     "test:lcov": "npm run test:cvg -- --coverageReporters=lcov text"
   },
   "peerDependencies": {
+    "@stone-js/http": "^0.0.1",
     "@stone-js/common": "^0.0.1",
     "@stone-js/config": "^0.0.1",
     "@stone-js/pipeline": "^0.0.1",
@@ -71,7 +80,16 @@
     "deepmerge": "^4.3.1",
     "mime": "^3.0.0",
     "on-finished": "^2.4.1",
-    "statuses": "^2.0.1"
+    "statuses": "^2.0.1",
+    "busboy": "^1.6.0",
+    "bytes": "^3.1.2",
+    "co-body": "^6.1.0",
+    "content-type": "^1.0.5",
+    "ip-range-check": "^0.2.0",
+    "proxy-addr": "^2.0.7",
+    "raw-body": "^2.5.2",
+    "send": "^0.18.0",
+    "type-is": "^1.6.18"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",

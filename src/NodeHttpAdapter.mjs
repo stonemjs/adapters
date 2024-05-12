@@ -5,7 +5,7 @@ import https from 'node:https'
 import statuses from 'statuses'
 import onFinished from 'on-finished'
 import { Adapter } from './Adapter.mjs'
-import { NODE_HTTP_PLATFORM } from '../constants.mjs'
+import { NODE_HTTP_PLATFORM } from './constants.mjs'
 import { isBrowser, RuntimeError } from '@stone-js/common'
 
 /**

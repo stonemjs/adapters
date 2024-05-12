@@ -1,5 +1,5 @@
 import { Adapter } from './Adapter.mjs'
-import { BROWSER_PLATFORM } from '../constants.mjs'
+import { BROWSER_PLATFORM } from './constants.mjs'
 import { RuntimeError, isBrowser } from '@stone-js/common'
 
 /**
