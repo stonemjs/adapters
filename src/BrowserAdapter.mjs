@@ -1,6 +1,5 @@
 import { Adapter } from './Adapter.mjs'
-import { BROWSER_PLATFORM } from './constants.mjs'
-import { RuntimeError, isBrowser } from '@stone-js/common'
+import { RuntimeError, isBrowser, BROWSER_PLATFORM } from '@stone-js/common'
 
 /**
  * Class representing a BrowserAdapter.

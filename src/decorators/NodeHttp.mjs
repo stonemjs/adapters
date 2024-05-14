@@ -1,7 +1,6 @@
 import deepmerge from 'deepmerge'
-import { NODE_HTTP_PLATFORM } from '@stone-js/adapters'
-import { classLevelDecoratorChecker } from '@stone-js/common'
 import { nodeHttpAdapterOptions } from '@stone-js/adapters/config'
+import { classLevelDecoratorChecker, NODE_HTTP_PLATFORM } from '@stone-js/common'
 
 /**
  * Interface for representing a Middleware.

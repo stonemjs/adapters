@@ -1,4 +1,5 @@
 import { IncomingHttpEvent } from '@stone-js/http'
+import { NODE_HTTP_PLATFORM } from '@stone-js/common'
 import {
   Mapper,
   IpMiddleware,
@@ -9,7 +10,6 @@ import {
   NodeHTTPAdapter,
   CommonMiddleware,
   SendFileMiddleware,
-  NODE_HTTP_PLATFORM,
   HeaderStatusMiddleware
 } from '@stone-js/adapters'
 

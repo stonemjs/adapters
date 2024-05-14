@@ -12,7 +12,6 @@ const inputs = {
   index: [
     'src/Mapper.mjs',
     'src/Adapter.mjs',
-    'src/constants.mjs',
     'src/middleware/**/*.mjs',
     'src/NodeHttpAdapter.mjs',
   ],
