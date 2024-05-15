@@ -1,6 +1,5 @@
-import deepmerge from 'deepmerge'
 import { nodeHttpAdapterOptions } from '@stone-js/adapters/config'
-import { classLevelDecoratorChecker, NODE_HTTP_PLATFORM } from '@stone-js/common'
+import { classLevelDecoratorChecker, merge, NODE_HTTP_PLATFORM } from '@stone-js/common'
 
 /**
  * Interface for representing a Middleware.
@@ -44,7 +43,7 @@ export const NodeHttp = (options = {}) => {
 
     const metadata = {
       adapters: [
-        deepmerge(nodeHttpAdapterOptions.adapters[0], {
+        merge(nodeHttpAdapterOptions.adapters[0], {
           app: {
             adapter: {
               default: options.default ?? false,
@@ -64,7 +63,7 @@ export const NodeHttp = (options = {}) => {
       ]
     }
 
-    target.$$metadata$$ = deepmerge(target.$$metadata$$ ?? {}, metadata)
+    target.$$metadata$$ = merge(target.$$metadata$$ ?? {}, metadata)
 
     return target
   }

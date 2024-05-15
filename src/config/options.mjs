@@ -14,7 +14,7 @@ import {
 } from '@stone-js/adapters'
 
 /**
- * Console options.
+ * Node http adapter options.
  *
  * @returns {Object}
 */
