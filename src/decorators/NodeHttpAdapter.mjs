@@ -29,7 +29,7 @@ import { classLevelDecoratorChecker, merge, NODE_HTTP_PLATFORM } from '@stone-js
  */
 
 /**
- * NodeHttp Decorator: Useful for customizing classes to ensure applications run smoothly on specific platforms.
+ * NodeHttp adapter Decorator: Useful for customizing classes to ensure applications run smoothly on specific platforms.
  *
  * @author Mr. Stone <evensstone@gmail.com>
  *
@@ -37,7 +37,7 @@ import { classLevelDecoratorChecker, merge, NODE_HTTP_PLATFORM } from '@stone-js
  * @param  {adapterOptions} options
  * @return {Function}
  */
-export const NodeHttp = (options = {}) => {
+export const NodeHttpAdapter = (options = {}) => {
   return (target) => {
     classLevelDecoratorChecker(target)
 
