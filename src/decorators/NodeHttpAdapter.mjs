@@ -9,7 +9,7 @@ import { classLevelDecoratorChecker, merge, NODE_HTTP_PLATFORM } from '@stone-js
  */
 
 /**
- * Decorators, usefull for decorating classes.
+ * Decorators, Useful for decorating classes.
  *
  * @author Mr. Stone <evensstone@gmail.com>
  *
