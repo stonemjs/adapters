@@ -1,5 +1,5 @@
 import { URL } from 'node:url'
-import { getHostname, getProtocol } from '@stone-js/event-foundation/utils'
+import { getHostname, getProtocol } from '@stone-js/http-core/utils'
 
 /**
  * Class representing an HostMiddleware.
@@ -25,7 +25,7 @@ export class HostMiddleware {
   }
 
   /**
-   * Handle platform-specific message and transform it to Stone.js IncomingEvent or HTTPEvent.
+   * Handle platform-specific message and transform it to Stone.js IncomingEvent.
    *
    * @param   {Passable} passable - Input data to transform via middleware.
    * @param   {Function} next - Pass to next middleware.

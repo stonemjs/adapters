@@ -1,5 +1,5 @@
-import { streamFile } from '@stone-js/event-foundation/utils'
-import { BinaryFileResponse } from '@stone-js/event-foundation'
+import { streamFile } from '@stone-js/http-core/utils'
+import { BinaryFileResponse } from '@stone-js/http-core'
 
 /**
  * Class representing a SendFileMiddleware.

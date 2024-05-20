@@ -1,4 +1,4 @@
-import { isMultipart, getFilesFromMessage } from '@stone-js/event-foundation/utils'
+import { isMultipart, getFilesFromMessage } from '@stone-js/http-core/utils'
 
 /**
  * Class representing a FilesMiddleware.
@@ -17,7 +17,7 @@ export class FilesMiddleware {
   }
 
   /**
-   * Handle platform-specific message and transform it to Stone.js IncomingEvent or HTTPEvent.
+   * Handle platform-specific message and transform it to Stone.js IncomingEvent.
    *
    * @param   {Passable} passable - Input data to transform via middleware.
    * @param   {Function} next - Pass to next middleware.

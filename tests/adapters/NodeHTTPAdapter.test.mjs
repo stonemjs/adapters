@@ -1,4 +1,4 @@
-import { HttpError } from '@stone-js/event-foundation'
+import { HttpError } from '@stone-js/http-core'
 import { NodeHTTPAdapter } from '../../../src/adapters/node/NodeHTTPAdapter.mjs'
 const adapterOptions = {}
 const server = {

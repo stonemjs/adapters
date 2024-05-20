@@ -1,5 +1,5 @@
 import statuses from 'statuses'
-import { HttpError } from '@stone-js/event-foundation'
+import { HttpError } from '@stone-js/http-core'
 import { AWSLambdaHTTPAdapter } from '../../../src/adapters/aws/AWSLambdaHTTPAdapter.mjs'
 
 jest.mock('statuses', () => ({ message: {} }))

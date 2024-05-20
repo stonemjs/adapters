@@ -1,5 +1,5 @@
 import proxyAddr from 'proxy-addr'
-import { isIpTrusted } from '@stone-js/event-foundation/utils'
+import { isIpTrusted } from '@stone-js/http-core/utils'
 
 /**
  * Class representing an IpMiddleware.
@@ -21,7 +21,7 @@ export class IpMiddleware {
   }
 
   /**
-   * Handle platform-specific message and transform it to Stone.js IncomingEvent or HTTPEvent.
+   * Handle platform-specific message and transform it to Stone.js IncomingEvent.
    *
    * @param   {Passable} passable - Input data to transform via middleware.
    * @param   {Function} next - Pass to next middleware.

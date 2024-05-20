@@ -1,5 +1,5 @@
 import { AdapterMapper } from '@stone-js/core'
-import { IncomingHttpEvent } from '@stone-js/event-foundation'
+import { IncomingHttpEvent } from '@stone-js/http-core'
 import {
   IpMiddleware,
   BodyMiddleware,

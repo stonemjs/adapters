@@ -1,5 +1,5 @@
-import { CookieCollection } from '@stone-js/event-foundation'
-import { getProtocol } from '@stone-js/event-foundation/utils'
+import { CookieCollection } from '@stone-js/http-core'
+import { getProtocol } from '@stone-js/http-core/utils'
 
 /**
  * Class representing a CommonMiddleware.
@@ -28,7 +28,7 @@ export class CommonMiddleware {
   }
 
   /**
-   * Handle platform-specific message and transform it to Stone.js IncomingEvent or HTTPEvent.
+   * Handle platform-specific message and transform it to Stone.js IncomingEvent.
    *
    * @param   {Passable} passable - Input data to transform via middleware.
    * @param   {Function} next - Pass to next middleware.
