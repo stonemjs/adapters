@@ -9,6 +9,7 @@ const inputs = {
   config: 'src/config/*.mjs',
   decorators: 'src/decorators/*.mjs',
   index: [
+    'src/constants.mjs',
     'src/middleware/**/*.mjs',
     'src/NodeHttpAdapter.mjs',
   ],
