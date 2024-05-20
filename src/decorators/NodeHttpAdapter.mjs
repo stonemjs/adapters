@@ -20,12 +20,12 @@ import { classLevelDecoratorChecker, merge, NODE_HTTP_PLATFORM } from '@stone-js
  * NodeHttp options.
  *
  * @typedef  {Object} adapterOptions
- * @property {string} url
- * @property {string} alias
- * @property {boolean} default
- * @property {Object} middleware
- * @property {(Middlewareable[]|string[])} middleware.input
- * @property {(Middlewareable[]|string[])} middleware.output
+ * @property {string} [url]
+ * @property {string} [alias]
+ * @property {boolean} [default]
+ * @property {Object} [middleware]
+ * @property {(Middlewareable[]|string[])} [middleware.input]
+ * @property {(Middlewareable[]|string[])} [middleware.output]
  */
 
 /**
@@ -34,7 +34,7 @@ import { classLevelDecoratorChecker, merge, NODE_HTTP_PLATFORM } from '@stone-js
  * @author Mr. Stone <evensstone@gmail.com>
  *
  * @memberOf Decorators
- * @param  {adapterOptions} options
+ * @param  {adapterOptions} [options]
  * @return {Function}
  */
 export const NodeHttpAdapter = (options = {}) => {
