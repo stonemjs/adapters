@@ -1,7 +1,6 @@
-import { IncomingHttpEvent } from '@stone-js/http'
-import { NODE_HTTP_PLATFORM } from '@stone-js/common'
+import { AdapterMapper } from '@stone-js/core'
+import { IncomingHttpEvent } from '@stone-js/event-foundation'
 import {
-  Mapper,
   IpMiddleware,
   BodyMiddleware,
   HostMiddleware,
@@ -10,8 +9,9 @@ import {
   NodeHTTPAdapter,
   CommonMiddleware,
   SendFileMiddleware,
+  NODE_HTTP_PLATFORM,
   HeaderStatusMiddleware
-} from '@stone-js/adapters'
+} from '@stone-js/node-adapter'
 
 /**
  * Node http adapter options.
@@ -51,7 +51,7 @@ export const nodeHttpAdapterOptions = {
         input: {
 
           // Mapper class constructor.
-          type: Mapper,
+          type: AdapterMapper,
 
           // Input mapper resolve
           resolver: (passable) => IncomingHttpEvent.create(passable.event),
@@ -72,7 +72,7 @@ export const nodeHttpAdapterOptions = {
         output: {
 
           // Mapper class constructor.
-          type: Mapper,
+          type: AdapterMapper,
 
           // Output mapper resolve
           resolver: (passable) => passable.response,

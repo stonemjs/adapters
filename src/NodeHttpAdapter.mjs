@@ -4,8 +4,9 @@ import accepts from 'accepts'
 import https from 'node:https'
 import statuses from 'statuses'
 import onFinished from 'on-finished'
-import { Adapter } from './Adapter.mjs'
-import { isBrowser, RuntimeError, NODE_HTTP_PLATFORM } from '@stone-js/common'
+import { Adapter } from '@stone-js/core'
+import { NODE_HTTP_PLATFORM } from './constants.mjs'
+import { isBrowser, RuntimeError } from '@stone-js/common'
 
 /**
  * Class representing a NodeHTTPAdapter.

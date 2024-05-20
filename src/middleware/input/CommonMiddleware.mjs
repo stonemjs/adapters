@@ -1,5 +1,5 @@
-import { CookieCollection } from '@stone-js/http'
-import { getProtocol } from '@stone-js/adapters/utils'
+import { CookieCollection } from '@stone-js/event-foundation'
+import { getProtocol } from '@stone-js/event-foundation/utils'
 
 /**
  * Class representing a CommonMiddleware.

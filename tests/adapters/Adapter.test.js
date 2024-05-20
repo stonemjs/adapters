@@ -1,7 +1,6 @@
 import { Config } from '@stone-js/config'
-import { Mapper } from '../../src/Mapper.mjs'
+import { Adapter, AdapterMapper } from '@stone-js/core'
 import { Container } from '@stone-js/service-container'
-import { Adapter } from '../../src/adapters/Adapter.mjs'
 
 describe('Adapter', () => {
   const config = Config.create({})
@@ -10,7 +9,7 @@ describe('Adapter', () => {
     passable.response.send = () => passable.result
     return next(passable)
   }
-  const outputMapper = Mapper.create(container, [SendMiddleware], (passable) => passable.response)
+  const outputMapper = AdapterMapper.create(container, [SendMiddleware], (passable) => passable.response)
 
   describe('#createAndRun', () => {
     beforeEach(() => {
@@ -94,7 +93,7 @@ describe('Adapter', () => {
         passable.event.uri = 'http://localhost:8080/'
         return next(passable)
       }
-      const inputMapper = Mapper.create(container, [UriMiddleware], (passable) => passable.event)
+      const inputMapper = AdapterMapper.create(container, [UriMiddleware], (passable) => passable.event)
 
       // Act
       const response = await Adapter.createAndRun(container, new App(), inputMapper, outputMapper)

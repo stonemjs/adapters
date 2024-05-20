@@ -1,6 +1,6 @@
+import { Adapter } from '@stone-js/core'
 import { Config } from '@stone-js/config'
 import { AppRunner } from '../src/AppRunner.mjs'
-import { Adapter } from '../src/adapters/Adapter.mjs'
 import { Container } from '@stone-js/service-container'
 
 describe('AppRunner', () => {

@@ -6,12 +6,9 @@ import nodeResolve from '@rollup/plugin-node-resolve'
 import nodeExternals from 'rollup-plugin-node-externals'
 
 const inputs = {
-  utils: 'src/utils.mjs',
   config: 'src/config/*.mjs',
   decorators: 'src/decorators/*.mjs',
   index: [
-    'src/Mapper.mjs',
-    'src/Adapter.mjs',
     'src/middleware/**/*.mjs',
     'src/NodeHttpAdapter.mjs',
   ],
@@ -25,7 +22,7 @@ export default Object.entries(inputs).map(([name, input]) => ({
   plugins: [
     multi(),
     nodeExternals({
-      include: [/^[@stone-js/adapters]/]
+      include: [/^@stone-js\/node-adapter/]
     }), // Must always be before `nodeResolve()`.
     nodeResolve({
       exportConditions: ['node', 'import', 'require', 'default']

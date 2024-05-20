@@ -2,8 +2,8 @@ import bytes from 'bytes'
 import typeIs from 'type-is'
 import rawBody from 'raw-body'
 import bodyParser from 'co-body'
-import { HttpError } from '@stone-js/common'
-import { isMultipart, getCharset } from '@stone-js/adapters/utils'
+import { HttpError } from '@stone-js/event-foundation'
+import { isMultipart, getCharset } from '@stone-js/event-foundation/utils'
 
 /**
  * Input data to transform via middleware.

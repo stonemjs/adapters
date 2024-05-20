@@ -1,5 +1,6 @@
-import { nodeHttpAdapterOptions } from '@stone-js/adapters/config'
-import { classLevelDecoratorChecker, merge, NODE_HTTP_PLATFORM } from '@stone-js/common'
+import { NODE_HTTP_PLATFORM } from '../constants.mjs'
+import { classLevelDecoratorChecker, merge } from '@stone-js/common'
+import { nodeHttpAdapterOptions } from '@stone-js/node-adapter/config'
 
 /**
  * Interface for representing a Middleware.

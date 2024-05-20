@@ -1,6 +1,6 @@
 # Change Log
 
-All notable changes to the "Stone.js Adapters" extension will be documented in this file.
+All notable changes to the "Stone.js Node Adapter" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 

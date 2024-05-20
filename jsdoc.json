@@ -18,7 +18,7 @@
     "scripts": [],
     "menu": {
       "Github repo": {
-        "href": "https://github.com/stonemjs/adapters",
+        "href": "https://github.com/stonemjs/node-adapter",
         "target": "_blank",
         "class": "menu-item",
         "id": "repository"

@@ -1,4 +1,4 @@
-import { Adapter } from './Adapter.mjs'
+import { Adapter } from '@stone-js/core'
 import { RuntimeError, isBrowser, BROWSER_PLATFORM } from '@stone-js/common'
 
 /**
